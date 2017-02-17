@@ -5,8 +5,8 @@ let reflex-platform = import ./reflex-platform {};
 in rec {
   inherit (nixpkgs) androidenv;
   vim = nixpkgs.vim;
-  patchelf = reflex-platform.nixpkgsCross.android.arm64.buildPackages.patchelf;
-  androidHaskellPackagesBase = reflex-platform.ghcAndroidArm64;
+  patchelf = reflex-platform.nixpkgsCross.android.armv7a.buildPackages.patchelf;
+  androidHaskellPackagesBase = reflex-platform.ghcAndroidArmv7a;
   androidHaskellPackages = androidHaskellPackagesBase.override {
     overrides = self: super: {
       mkDerivation = drv: super.mkDerivation (drv // {
@@ -38,7 +38,7 @@ in rec {
       ghc-options: -shared -fPIC -threaded -no-hs-main
       main-is: App.hs
       c-sources: cbits/focus.c
-      include-dirs: cbits/include, "${androidNdk}/libexec/android-ndk-r10e/platforms/android-21/arch-arm64/usr/include/"
+      include-dirs: cbits/include, "${androidNdk}/libexec/android-ndk-r10e/platforms/android-21/arch-arm/usr/include/"
       includes: jni.h
       install-includes: cbits/include/focus.h
       exposed-modules: App
@@ -106,7 +106,7 @@ in rec {
     app = androidApp;
     platformVersion = "21";
     enableGPU = true;
-    abiVersion = "arm64-v8a";
+    abiVersion = "armeabi-v7a";
     useGoogleAPIs = false;
     package = androidPackagePrefix + "." + appName;
     activity = ".MainActivity";
